@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import uuid from "uuid";
-import contactContext from "./contactContext";
+import { contactContext } from "./contactContext";
 import contactReducer from "./contactReducer";
 import {
   ADD_CONTACT,
@@ -12,7 +12,7 @@ import {
   CLEAR_FILTER,
 } from "../types";
 
-const ContactState = (props) => {
+export const ContactState = (props) => {
   const initialState = {
     contacts: [
       {
@@ -56,10 +56,8 @@ const ContactState = (props) => {
   //Clear filter
 
   return (
-    <contactContext value={{ contacts: state.contacts }}>
+    <contactContext.Provider value={{ contacts: state.contacts }}>
       {props.children}
-    </contactContext>
+    </contactContext.Provider>
   );
 };
-
-export default ContactState;
