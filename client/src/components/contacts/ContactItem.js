@@ -64,12 +64,13 @@ const ContactDeleteButton = styled.div`
 
 export const ContactItem = ({ contact }) => {
   const contactsContext = useContext(contactContext);
-  const { deleteContact } = contactsContext;
+  const { deleteContact, setCurrent, clearCurrent } = contactsContext;
 
   const { id, name, email, phone, type } = contact;
 
   const onDelete = () => {
     deleteContact(id);
+    clearCurrent();
   };
   return (
     <ContactItemContainer>
@@ -104,7 +105,9 @@ export const ContactItem = ({ contact }) => {
         </ContactInfoLine>
       </ContactInfoList>
       <ContactButtonsContainer>
-        <ContactEditButton>Edit</ContactEditButton>
+        <ContactEditButton onClick={() => setCurrent(contact)}>
+          Edit
+        </ContactEditButton>
         <ContactDeleteButton onClick={onDelete}>Delete</ContactDeleteButton>
       </ContactButtonsContainer>
     </ContactItemContainer>
