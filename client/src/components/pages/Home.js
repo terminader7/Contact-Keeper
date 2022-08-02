@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { ContactForm } from "../contacts/ContactForm";
 import { Contacts } from "../contacts/Contacts";
 
 const HomepageContainer = styled.div`
@@ -11,7 +12,9 @@ const HomepageContainer = styled.div`
 export const Home = () => {
   return (
     <HomepageContainer>
-      <div>{/* ContactForm */}</div>
+      <div>
+        <ContactForm />
+      </div>
       <div>
         <Contacts />
       </div>

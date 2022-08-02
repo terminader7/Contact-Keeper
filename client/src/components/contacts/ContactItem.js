@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { contactContext } from "../../context/contact/contactContext";
 
 import { OpenEnvelope } from "../../icons/OpenEnvelope";
 import { Phone } from "../../icons/Phone";
@@ -62,7 +63,14 @@ const ContactDeleteButton = styled.div`
 `;
 
 export const ContactItem = ({ contact }) => {
+  const contactsContext = useContext(contactContext);
+  const { deleteContact } = contactsContext;
+
   const { id, name, email, phone, type } = contact;
+
+  const onDelete = () => {
+    deleteContact(id);
+  };
   return (
     <ContactItemContainer>
       <ContactCard>
@@ -97,7 +105,7 @@ export const ContactItem = ({ contact }) => {
       </ContactInfoList>
       <ContactButtonsContainer>
         <ContactEditButton>Edit</ContactEditButton>
-        <ContactDeleteButton>Delete</ContactDeleteButton>
+        <ContactDeleteButton onClick={onDelete}>Delete</ContactDeleteButton>
       </ContactButtonsContainer>
     </ContactItemContainer>
   );
