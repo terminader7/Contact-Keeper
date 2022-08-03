@@ -7,9 +7,9 @@ const AddContact = styled.h2`
 `;
 
 export const ContactForm = () => {
-  const contactsContext = useContext(contactContext);
-
-  const { addContact, updateContact, clearCurrent, current } = contactsContext;
+  const { addContact, updateContact, clearCurrent, current } = useContext(
+    contactContext
+  );
 
   useEffect(() => {
     if (current !== null) {
@@ -22,7 +22,7 @@ export const ContactForm = () => {
         type: "personal",
       });
     }
-  }, [contactsContext]);
+  }, [addContact, updateContact, clearCurrent, current]);
 
   const [contact, setContact] = useState({
     name: "",
