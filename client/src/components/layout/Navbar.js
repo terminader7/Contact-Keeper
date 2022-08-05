@@ -25,7 +25,7 @@ const NavbarLinksList = styled.ul`
   align-items: center;
   justify-content: flex-end;
   position: absolute;
-  margin-left: 1720px;
+  margin-left: 1600px;
 `;
 
 const NavbarLinkItem = styled.div`
@@ -50,6 +50,12 @@ export const Navbar = ({ title }) => {
         </NavbarLinkItem>
         <NavbarLinkItem>
           <Link to="/about">About</Link>
+        </NavbarLinkItem>
+        <NavbarLinkItem>
+          <Link to="/register">Register</Link>
+        </NavbarLinkItem>
+        <NavbarLinkItem>
+          <Link to="/login">Login</Link>
         </NavbarLinkItem>
       </NavbarLinksList>
     </NavbarContainer>
