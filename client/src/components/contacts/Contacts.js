@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from "react";
+import React, { useContext } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { ContactItem } from "./ContactItem";
 import { contactContext } from "../../context/contact/contactContext";
@@ -12,7 +12,7 @@ export const Contacts = () => {
 
   //checking to see if there's anything in filtered, we will map through and show the filtered items, if filtered is empty, then we show the contacts
   return (
-    <Fragment>
+    <>
       <TransitionGroup>
         {filtered !== null
           ? filtered.map((contact) => (
@@ -26,6 +26,6 @@ export const Contacts = () => {
               </CSSTransition>
             ))}
       </TransitionGroup>
-    </Fragment>
+    </>
   );
 };

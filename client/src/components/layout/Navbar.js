@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -61,7 +61,7 @@ export const Navbar = ({ title }) => {
   };
 
   const authLinks = (
-    <Fragment>
+    <>
       <NavbarGreetingContainer>
         Hello {user && user.name}
       </NavbarGreetingContainer>
@@ -71,18 +71,18 @@ export const Navbar = ({ title }) => {
           <span className="hide-sm">Logout</span>
         </NavbarLogoutContainer>
       </a>
-    </Fragment>
+    </>
   );
 
   const guestLinks = (
-    <Fragment>
+    <>
       <NavbarLinkItem>
         <Link to="/register">Register</Link>
       </NavbarLinkItem>
       <NavbarLinkItem>
         <Link to="/login">Login</Link>
       </NavbarLinkItem>
-    </Fragment>
+    </>
   );
 
   return (
