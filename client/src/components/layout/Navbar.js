@@ -1,9 +1,11 @@
-import React from "react";
+import React, { Fragment, useContext } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { authContext } from "../../context/auth/authContext";
 
 import { IdCard } from "../../icons/IdCard";
+import { Logout } from "../../icons/LogOut";
 
 const NavbarContainer = styled.div`
   display: flex;
@@ -20,7 +22,7 @@ const NavbarContentContainer = styled.div`
   font-size: 25px;
 `;
 
-const NavbarLinksList = styled.ul`
+const NavbarItemsList = styled.ul`
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -35,29 +37,63 @@ const NavbarLinkItem = styled.div`
   cursor: pointer;
   display: flex;
   transition: 0.5s;
+  align-items: center;
+`;
+
+const NavbarGreetingContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const NavbarLogoutContainer = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 `;
 
 export const Navbar = ({ title }) => {
+  const { isAuthenticated, logout, user } = useContext(authContext);
+
+  const onLogout = () => {
+    logout();
+  };
+
+  const authLinks = (
+    <Fragment>
+      <NavbarGreetingContainer>
+        Hello {user && user.name}
+      </NavbarGreetingContainer>
+      <a onClick={onLogout} href="#!">
+        <NavbarLogoutContainer>
+          <Logout />
+          <span className="hide-sm">Logout</span>
+        </NavbarLogoutContainer>
+      </a>
+    </Fragment>
+  );
+
+  const guestLinks = (
+    <Fragment>
+      <NavbarLinkItem>
+        <Link to="/register">Register</Link>
+      </NavbarLinkItem>
+      <NavbarLinkItem>
+        <Link to="/login">Login</Link>
+      </NavbarLinkItem>
+    </Fragment>
+  );
+
   return (
     <NavbarContainer className="navbar bg-primary">
       <NavbarContentContainer>
         <IdCard />
         {title}
       </NavbarContentContainer>
-      <NavbarLinksList>
-        <NavbarLinkItem>
-          <Link to="/">Home</Link>
-        </NavbarLinkItem>
-        <NavbarLinkItem>
-          <Link to="/about">About</Link>
-        </NavbarLinkItem>
-        <NavbarLinkItem>
-          <Link to="/register">Register</Link>
-        </NavbarLinkItem>
-        <NavbarLinkItem>
-          <Link to="/login">Login</Link>
-        </NavbarLinkItem>
-      </NavbarLinksList>
+      <NavbarItemsList>
+        {isAuthenticated ? authLinks : guestLinks}
+      </NavbarItemsList>
     </NavbarContainer>
   );
 };
