@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { authContext } from "../../context/auth/authContext";
+import { contactContext } from "../../context/contact/contactContext";
 
 import { IdCard } from "../../icons/IdCard";
 import { Logout } from "../../icons/LogOut";
@@ -55,9 +56,11 @@ const NavbarLogoutContainer = styled.div`
 
 export const Navbar = ({ title }) => {
   const { isAuthenticated, logout, user } = useContext(authContext);
+  const { clearContacts } = useContext(contactContext);
 
   const onLogout = () => {
     logout();
+    clearContacts();
   };
 
   const authLinks = (
