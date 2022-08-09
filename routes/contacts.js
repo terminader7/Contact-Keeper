@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
-const auth = require("../middleware/auth");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const User = require("../models/User");
 const Contact = require("../models/Contact");
@@ -9,7 +9,7 @@ const Contact = require("../models/Contact");
 //@route    GET api/contacts
 //@desc     Get all users contacts
 //@access   Private
-router.get("/", auth, async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const contacts = await Contact.find({ user: req.user.id }).sort({
       date: -1,
@@ -27,7 +27,7 @@ router.get("/", auth, async (req, res) => {
 //@access   Private
 router.post(
   "/",
-  [auth, [check("name", "Name is required").not().isEmpty()]],
+  [authMiddleware, [check("name", "Name is required").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -58,7 +58,7 @@ router.post(
 //@route    Put api/contacts/:id
 //@desc     Update contact
 //@access   Private
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", authMiddleware, async (req, res) => {
   const { name, email, phone, type } = req.body;
 
   //Build contact object
@@ -94,7 +94,7 @@ router.put("/:id", auth, async (req, res) => {
 //@route    DELETE api/contacts
 //@desc     Delete contact
 //@access   Private
-router.delete("/:id", auth, async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     let contact = await Contact.findById(req.params.id);
 

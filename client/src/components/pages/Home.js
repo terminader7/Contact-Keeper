@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { ContactForm } from "../contacts/ContactForm";
 import { ContactFilter } from "../contacts/ContactFilter";
 import { Contacts } from "../contacts/Contacts";
-import { authContext } from "../../context/auth/authContext";
 
 const HomepageContainer = styled.div`
   display: grid;
@@ -12,11 +11,6 @@ const HomepageContainer = styled.div`
 `;
 
 export const Home = () => {
-  const authorizationContext = useContext(authContext);
-  useEffect(() => {
-    authorizationContext.loadUser();
-    //eslin-disable-next-line
-  }, []);
   return (
     <HomepageContainer>
       <div>

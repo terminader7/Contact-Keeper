@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const history = useNavigate();
+
   const { setAlert } = useContext(alertContext);
+
   const { login, error, clearErrors, isAuthenticated } = useContext(
     authContext
   );
