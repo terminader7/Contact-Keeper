@@ -18,7 +18,7 @@ router.get("/", authMiddleware, async (req, res) => {
     res.json(contacts);
   } catch (err) {
     console.error(err.message);
-    re;
+    res;
   }
 });
 

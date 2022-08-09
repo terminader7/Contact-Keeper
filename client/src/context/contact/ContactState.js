@@ -1,6 +1,7 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useContext } from "react";
 import axios from "axios";
 import { contactContext } from "./contactContext";
+import { authContext } from "../auth/authContext";
 import contactReducer from "./contactReducer";
 import {
   GET_CONTACTS,
@@ -16,6 +17,8 @@ import {
 } from "../types";
 
 export const ContactState = (props) => {
+  const { logout } = useContext(authContext);
+
   const initialState = {
     contacts: null,
     current: null,
@@ -32,7 +35,11 @@ export const ContactState = (props) => {
 
       dispatch({ type: GET_CONTACTS, payload: res.data });
     } catch (err) {
-      dispatch({ type: CONTACT_ERROR, payload: err.response.msg });
+      if (err.response.status === 401) {
+        logout();
+      } else {
+        dispatch({ type: CONTACT_ERROR, payload: err.response.msg });
+      }
     }
   };
 
