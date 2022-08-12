@@ -1,19 +1,19 @@
-import { Router } from "express";
-const router = Router();
-import { sign } from "jsonwebtoken";
-import { check, validationResult } from "express-validator";
-import { compare } from "bcryptjs";
-import { get } from "config";
-import authMiddleware from "../middleware/authMiddleware";
+const express = require("express");
+const router = express.Router();
+const jwt = require("jsonwebtoken");
+const { check, validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
+const config = require("config");
+const authMiddleware = require("../middleware/authMiddleware");
 
-import { findById, findOne } from "../models/User";
+const User = require("../models/User");
 
 //@route    GET api/auth
 //@desc     Get logged in user
 //@access   Private
 router.get("/", authMiddleware, async (req, res) => {
   try {
-    const user = await findById(req.user.id).select("-password");
+    const user = await User.findById(req.user.id).select("-password");
     res.json(user);
   } catch (err) {
     console.error(err.message);
@@ -40,13 +40,13 @@ router.post(
 
     const { email, password } = req.body;
     try {
-      let user = await findOne({ email });
+      let user = await User.findOne({ email });
 
       if (!user) {
         return res.status(400).json({ msg: "Invalid Credentials" });
       }
 
-      const isMatch = await compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
         return res.status(400).json({ msg: "Invalid Credentials" });
@@ -58,9 +58,9 @@ router.post(
         },
       };
 
-      sign(
+      jwt.sign(
         payload,
-        get("jwtSecret"),
+        config.get("JWT_SECRET"),
         {
           expiresIn: 360000,
         },
