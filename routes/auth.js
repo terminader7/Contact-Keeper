@@ -33,14 +33,13 @@ router.post(
   async (req, res) => {
     console.debug("Executing auth post req");
 
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { email, password } = req.body;
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-      }
-
-      const { email, password } = req.body;
-
       let user = await User.findOne({ email });
 
       if (!user) {
