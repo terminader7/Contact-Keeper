@@ -11,7 +11,7 @@ export default function (req, res, next) {
   }
 
   try {
-    const decoded = verify(token, get("jwtSecret"));
+    const decoded = verify(token, get("JWT_SECRET"));
 
     req.user = decoded.user;
     next();
