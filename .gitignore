@@ -1,6 +1,5 @@
 node_modules/
 
-/client/build 
 
 .DS-Store
 /client/.env.local
